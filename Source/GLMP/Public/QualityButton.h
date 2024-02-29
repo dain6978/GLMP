@@ -22,27 +22,40 @@ public:
 	UFUNCTION()
 	void SetTypeState(EQualityTypeState Type);
 
+	UFUNCTION()
+	EQualityLevelState GetLevelState();
 
-protected:
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UButton* Button;
+	UFUNCTION()
+	EQualityTypeState GetTypeState();
 
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Text_LevelState;
-
-	EQualityLevelState QualityLevelState;
-	EQualityTypeState QualityTypeState;
-
-	TArray<UButton*> Buttons;
-
-
-	virtual void NativePreConstruct() override;
+	UFUNCTION()
+	void SetButtons(TArray<UQualityButton*> QualityButtons);
 
 	UFUNCTION()
 	void UnPressed();
 
 	UFUNCTION()
 	void OnPressed();
+
+
+protected:
+	// Variables
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* Text_LevelState;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Button;
+
+	TArray<UButton*> Buttons;
+
+	EQualityLevelState QualityLevelState;
+	EQualityTypeState QualityTypeState;
+
+	FLinearColor UnPressedColor;
+	FLinearColor OnPressedColor;
+
+	// Functions
+	virtual void NativePreConstruct() override;
 
 	UFUNCTION()
 	void OnClickedButton();

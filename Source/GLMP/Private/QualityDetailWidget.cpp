@@ -41,13 +41,15 @@ void UQualityDetailWidget::CreateQualityButtons()
 			Cast<UPanelWidget>(Containers->GetChildAt(TypeIndex))->AddChild(QualityButton);
 			QualityButton->SetPadding(FMargin(10.f, 0.f, 15.f, 0.f));
 		}
+		QualityButton->SetButtons(QualityButtons[static_cast<int32>(Type)]);
 	}
 }
 
 void UQualityDetailWidget::SetInitState()
 {
-	// Resolution Scale
 	UGameUserSettings* Setting = UGameUserSettings::GetGameUserSettings();
+	// Resolution Scale
+
 	float Val = Setting->GetResolutionScaleNormalized();
 	Slider_ResolutionScale->SetValue(Val);
 
@@ -56,7 +58,44 @@ void UQualityDetailWidget::SetInitState()
 	Text_ResolutionScale->SetText(FText::FromString(SliderString));
 
 	// Others
+	for (EQualityTypeState Type : TEnumRange<EQualityTypeState>())
+	{
+		int32 TypeIndex = static_cast<int32>(Type);
+		int32 LevelIndex;
 
+		switch (Type)
+		{
+		case EQualityTypeState::ViewDistance:
+			LevelIndex = Setting->GetViewDistanceQuality();
+			break;
+		case EQualityTypeState::AntiAliasing:
+			LevelIndex = Setting->GetAntiAliasingQuality();
+			break;
+		case EQualityTypeState::PostProcessing:
+			LevelIndex = Setting->GetPostProcessingQuality();
+			break;
+		case EQualityTypeState::Shadows:
+			LevelIndex = Setting->GetShadowQuality();
+			break;
+		case EQualityTypeState::GlobalIllumination:
+			LevelIndex = Setting->GetGlobalIlluminationQuality();
+			break;
+		case EQualityTypeState::Reflection:
+			LevelIndex = Setting->GetReflectionQuality();
+			break;
+		case EQualityTypeState::Textures:
+			LevelIndex = Setting->GetTextureQuality();
+			break;
+		case EQualityTypeState::Effects:
+			LevelIndex = Setting->GetVisualEffectQuality();
+			break;
+		case EQualityTypeState::Foliage:
+			LevelIndex = Setting->GetFoliageQuality();
+			break;
+		}
+		
+		QualityButtons[TypeIndex][LevelIndex]->OnPressed();
+	}
 }
 
 
