@@ -15,6 +15,14 @@ class GLMP_API UQualityButton : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION()
+	void SetLevelState(EQualityLevelState Level);
+
+	UFUNCTION()
+	void SetTypeState(EQualityTypeState Type);
+
+
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* Button;
@@ -31,11 +39,11 @@ protected:
 	virtual void NativePreConstruct() override;
 
 	UFUNCTION()
-	void OnClickedButton();
+	void UnPressed();
 
 	UFUNCTION()
 	void OnPressed();
 
 	UFUNCTION()
-	void UnPressed();
+	void OnClickedButton();
 };

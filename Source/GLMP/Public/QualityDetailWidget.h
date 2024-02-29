@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+
+#include "QualityStateEnums.h"
+#include "QualityButton.h"
+
 #include "QualityDetailWidget.generated.h"
 
 /**
@@ -15,13 +19,14 @@ class GLMP_API UQualityDetailWidget : public UUserWidget
 	GENERATED_BODY()
 	
 protected:
+	// Variables
 	UPROPERTY(EditAnywhere, Category = "Widget")
 	TSubclassOf<UUserWidget> QualityButtonClass;
-	UUserWidget* QualityButton;
+	UQualityButton* QualityButton;
 
-	// TArray<TArray<QualityButton>> QualityButtons;
+	TArray<TArray<UQualityButton*>> QualityButtons;
 
-	// Variables
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* Button_Exit;
 	
@@ -47,4 +52,10 @@ protected:
 
 	UFUNCTION()
 	void OnClickedExitButton();
+
+	UFUNCTION()
+	void OnChangedResolutionSlider();
+
+	UFUNCTION()
+	void EndCapturedResolutionSlider();
 };

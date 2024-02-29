@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 
+
 UENUM(BlueprintType)
 enum class EQualityLevelState : uint8
 {
@@ -11,6 +12,7 @@ enum class EQualityLevelState : uint8
 	Epic,
 	Cinematic
 };
+ENUM_RANGE_BY_COUNT(EQualityLevelState, EQualityLevelState::Cinematic)
 
 
 UENUM(BlueprintType)
@@ -27,3 +29,12 @@ enum class EQualityTypeState : uint8
 	Effects				UMETA(DisplayName = "Effects"),
 	Foliage				UMETA(DisplayName = "Foliage")
 };
+ENUM_RANGE_BY_COUNT(EQualityTypeState, EQualityTypeState::Foliage)
+
+
+template<typename T>
+FString EnumToString(const FString& enumName, const T value)
+{
+	UEnum* pEnum = FindObject<UEnum>(ANY_PACKAGE, *enumName, true);
+	return pEnum ? pEnum->GetValueAsString(value) : FString();
+}
