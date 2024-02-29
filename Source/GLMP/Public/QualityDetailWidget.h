@@ -54,7 +54,7 @@ protected:
 	void OnClickedExitButton();
 
 	UFUNCTION()
-	void OnChangedResolutionSlider();
+	void OnChangedResolutionSlider(float Val);
 
 	UFUNCTION()
 	void EndCapturedResolutionSlider();

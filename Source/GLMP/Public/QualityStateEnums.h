@@ -10,9 +10,11 @@ enum class EQualityLevelState : uint8
 	Medium,
 	High,
 	Epic,
-	Cinematic
+	Cinematic,
+
+	Max					UMETA(Hidden)
 };
-ENUM_RANGE_BY_COUNT(EQualityLevelState, EQualityLevelState::Cinematic)
+ENUM_RANGE_BY_COUNT(EQualityLevelState, EQualityLevelState::Max)
 
 
 UENUM(BlueprintType)
@@ -27,14 +29,25 @@ enum class EQualityTypeState : uint8
 	Reflection			UMETA(DisplayName = "Reflection"),
 	Textures			UMETA(DisplayName = "Textures"),
 	Effects				UMETA(DisplayName = "Effects"),
-	Foliage				UMETA(DisplayName = "Foliage")
+	Foliage				UMETA(DisplayName = "Foliage"),
+	Shading				UMETA(DisplayName = "Shading"),
+
+	Max					UMETA(Hidden)
+	
 };
-ENUM_RANGE_BY_COUNT(EQualityTypeState, EQualityTypeState::Foliage)
+ENUM_RANGE_BY_COUNT(EQualityTypeState, EQualityTypeState::Max)
 
 
 template<typename T>
 FString EnumToString(const FString& enumName, const T value)
 {
 	UEnum* pEnum = FindObject<UEnum>(ANY_PACKAGE, *enumName, true);
-	return pEnum ? pEnum->GetValueAsString(value) : FString();
+	return pEnum ? pEnum->GetNameStringByIndex(static_cast<int32>(value)) : FString();
+}
+
+template<typename T>
+int32 GetNumEnums(const FString& enumName, const T value)
+{
+	UEnum* pEnum = FindObject<UEnum>(ANY_PACKAGE, *enumName, true);
+	return pEnum ? pEnum->GetMaxEnumValue() : 0;
 }

@@ -23,12 +23,6 @@ public:
 	void SetTypeState(EQualityTypeState Type);
 
 	UFUNCTION()
-	EQualityLevelState GetLevelState();
-
-	UFUNCTION()
-	EQualityTypeState GetTypeState();
-
-	UFUNCTION()
 	void SetButtons(TArray<UQualityButton*> QualityButtons);
 
 	UFUNCTION()
@@ -46,7 +40,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UButton* Button;
 
-	TArray<UButton*> Buttons;
+	TArray<UButton*> Buttons; // 같은 Type, 다른 Level의 버튼들 (UnPressed시 이용)
 
 	EQualityLevelState QualityLevelState;
 	EQualityTypeState QualityTypeState;
@@ -55,7 +49,7 @@ protected:
 	FLinearColor OnPressedColor;
 
 	// Functions
-	virtual void NativePreConstruct() override;
+	virtual void NativeConstruct() override;
 
 	UFUNCTION()
 	void OnClickedButton();

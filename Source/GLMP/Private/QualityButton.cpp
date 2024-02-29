@@ -3,9 +3,9 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/GameUserSettings.h"
-#include <VisualLogger/VisualLoggerTypes.h>
 
-void UQualityButton::NativePreConstruct()
+// Construct
+void UQualityButton::NativeConstruct()
 {
 	if (Button)
 	{
@@ -27,17 +27,6 @@ void UQualityButton::SetTypeState(EQualityTypeState Type)
 	QualityTypeState = Type;
 }
 
-EQualityLevelState UQualityButton::GetLevelState()
-{
-	return QualityLevelState;
-}
-
-EQualityTypeState UQualityButton::GetTypeState()
-{
-	return QualityTypeState;
-}
-
-
 void UQualityButton::SetButtons(TArray<UQualityButton*> QualityButtons)
 {
 	for (int32 i = 0; i < QualityButtons.Num(); i++)
@@ -46,6 +35,8 @@ void UQualityButton::SetButtons(TArray<UQualityButton*> QualityButtons)
 	}
 }
 
+
+// Click Event 
 void UQualityButton::UnPressed()
 {	
 	for (int32 i = 0; i < Buttons.Num(); i++)
@@ -90,6 +81,9 @@ void UQualityButton::OnPressed()
 	case EQualityTypeState::Foliage:
 		Setting->SetFoliageQuality(QualityLevelIndex);
 		break;
+	case EQualityTypeState::Shading:
+		Setting->SetShadingQuality(QualityLevelIndex);
+		break;
 	}
 }
 
@@ -100,3 +94,4 @@ void UQualityButton::OnClickedButton()
 	UGameUserSettings* Setting = UGameUserSettings::GetGameUserSettings();
 	Setting->ApplySettings(true);
 }
+
